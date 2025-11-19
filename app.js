@@ -1,12 +1,16 @@
 const express = require("express");
 const app = express();
-const port = 3000;
-const Route = require("./routes/client/index.route");
+
+require("dotenv").config();
+const port = process.env.PORT;
+
+const route = require("./routes/client/index.route");
 
 app.set("view engine", "pug");
 app.set("views", "./views");
 
-Route(app);
+//Routing
+route(app);
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
