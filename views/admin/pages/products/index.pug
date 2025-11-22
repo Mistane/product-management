@@ -4,6 +4,23 @@ block main
   h1 Danh sach san pham
   .card
     .card-body
+      .card.mb-3
+        .card-header Bo loc va tim kiem
+        .card-body
+          button(
+            class="btn btn-sm ml-1 btn-outline-success active"
+            button-status=""
+          ) Tat ca
+
+          button(
+            class="btn btn-sm ml-1 btn-outline-success"
+            button-status="active"
+          ) Hoat dong
+
+          button(
+            class="btn btn-sm ml-1 btn-outline-success"
+            button-status="inactive"
+          ) Dung hoat dong
       table.table
         thead
           tr
