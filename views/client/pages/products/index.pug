@@ -1,4 +1,16 @@
 extends ../../layouts/default
 
 block main
-  h1 day la Trang san pham
+  .container
+    .product-list
+      each product in products
+        .product-item.row
+          .col-12
+            img(src=`#{product.thumbnail}` alt=`#{product.title}` class="product-img")
+          .col-12
+            p.product-name #{product.title}
+            p.product-price #{product.newPrice}$
+            p.product-oldPrice #{product.price}$
+            p.product-discount #{product.discountPercentage}%
+
+     

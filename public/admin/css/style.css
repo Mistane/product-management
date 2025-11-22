@@ -1,0 +1,50 @@
+//-----------------header-----------------------
+* {
+  border-type: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.header .container ul {
+  postition: absolute;
+  right: 50px;
+}
+
+.header {
+  border-bottom: 1px solid black;
+}
+
+.header-bar img {
+  display: flex;
+  justify-content: center;
+  align-item: center;
+}
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-item: center;
+  position: relative;
+  padding-top: 20px;
+}
+//---------------------------------------------
+
+//------------------sidebarr------------------------
+.row {
+  background-color: blue;
+  height: 100vh;
+}
+
+.siderbar {
+  display: flex;
+  background-color: black;
+}
+
+.sidebar a {
+  display: block;
+}

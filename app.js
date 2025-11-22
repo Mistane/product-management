@@ -1,16 +1,26 @@
 const express = require("express");
 const app = express();
+const db = require("./config/database");
 
+app.use(express.static("public"));
 require("dotenv").config();
 const port = process.env.PORT;
 
-const route = require("./routes/client/index.route");
+const Route = require("./routes/client/index.route");
+const adminRoute = require("./routes/admin/index.route");
 
 app.set("view engine", "pug");
 app.set("views", "./views");
 
+//local  variables
+const systemVar = require("./config/system");
+app.locals.prefixAdmin = systemVar.prefixAdmin;
+
 //Routing
-route(app);
+Route(app);
+adminRoute(app);
+
+db.connect();
 
 app.listen(port, () => {
   console.log(`server running at port ${port}`);
