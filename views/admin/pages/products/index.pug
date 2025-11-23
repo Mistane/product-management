@@ -5,16 +5,31 @@ block main
   .card
     .card-body
       .card.mb-3
-        .card-header Bo loc va tim kiem
-        .card-body
-          each item in filter
-            button(
-              class=item.class == "active"
-                ? "btn btn-sm ml-1 btn-outline-success active"
-                : "btn btn-sm ml-1 btn-outline-success"
-              button-status=item.status
-              ) #{item.name}
-              
+        .row
+          .col-6
+            .card-header Bo loc va tim kiem
+            .card-body
+              each item in filter
+                button(
+                  class=item.class == "active"
+                    ? "btn btn-sm ml-1 btn-outline-success active"
+                    : "btn btn-sm ml-1 btn-outline-success"
+                  button-status=item.status
+                  ) #{item.name}
+          .col-6
+            form(id="form-search")
+              .input-group
+                input(
+                  type="text"
+                  placeholder="Nhap tu khoa"
+                  name="keyword"
+                  value=keyword
+                )
+              .input-group-append
+                button(
+                  type="submit"
+                  class="btn btn-success"
+                ) Tim kiem
 
       table.table
         thead

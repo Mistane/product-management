@@ -25,7 +25,9 @@ class productsController {
 
     const status = req.query.status;
     console.log(status);
-    const find = {};
+    const find = {
+      deleted: false,
+    };
     if (status) {
       find.status = status;
       const idx = filterStatus.findIndex((item) => {
@@ -38,13 +40,20 @@ class productsController {
       });
       filterStatus[idx].class = "active";
     }
-    console.log(find);
+    //------------phan tim kiem
+    const keyword = req.query.keyword;
+    if (keyword) {
+      find.title = keyword;
+    }
     const products = await Product.find(find);
+
+    //-----------------------------------------
 
     res.render("./admin/pages/products/index", {
       pageTitle: "Trang san pham",
       products,
       filter: filterStatus,
+      keyword,
     });
   }
 }

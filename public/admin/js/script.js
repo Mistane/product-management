@@ -12,3 +12,18 @@ buttons.forEach((button) => {
     window.location.href = url;
   });
 });
+//--------------------------------------------------------------------------
+
+//-------------------xu li phan tim kiem-----------------------------------
+const formSearch = document.querySelector("#form-search");
+formSearch.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const input = document.querySelector("#form-search input").value;
+  let url = new URL(window.location.href);
+  if (input) {
+    url.searchParams.set("keyword", input);
+  } else {
+    url.searchParams.delete("keyword");
+  }
+  window.location.href = url;
+});
