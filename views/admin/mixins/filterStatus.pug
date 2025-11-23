@@ -1,0 +1,10 @@
+mixin filter-status(filterStatus)
+  .card-header Bo loc va tim kiem
+  .card-body
+    each item in filterStatus
+      button(
+        class=item.class == "active"
+          ? "btn btn-sm ml-1 btn-outline-success active"
+          : "btn btn-sm ml-1 btn-outline-success"
+        button-status=item.status
+        ) #{item.name}
