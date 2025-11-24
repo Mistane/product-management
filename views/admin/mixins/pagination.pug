@@ -1,0 +1,24 @@
+mixin pagination(objectPagination)
+  nav
+    ul(class="pagination")
+      if(objectPagination.currentPage > 1)
+        li(class="page-item")
+          a(class="page-link"
+            button-pagination=objectPagination.currentPage-1
+          ) Trang truoc
+      - for (var i = 1; i <= objectPagination.pages; i++)
+          if(objectPagination.currentPage == i)
+            li(class="page-item active")
+              a(class="page-link"
+                button-pagination=i
+              ) #{i}
+          else
+            li(class="page-item")
+                a(class="page-link" 
+                  button-pagination=i
+                ) #{i}
+      if(objectPagination.currentPage < objectPagination.pages)
+        li(class="page-item")
+          a(class="page-link"
+            button-pagination=objectPagination.currentPage+1
+          ) Trang sau

@@ -1,0 +1,19 @@
+mixin form-change-multi(path)
+    form(
+      action=path
+      id="form-change-multi"
+      method="POST"
+    )
+      .d-flex.aligns-item-start
+        .form-group
+          select(name="type" class="form-control")
+            option(value="active") Hoat dong
+            option(value="inactive") Dung hoat dong
+        .form-group
+          input(
+            name="ids"
+            value=""
+            class="form-control d-none"
+            type="text"
+          )
+        button(type="submit" class="btn btn-primary") Ap dung
