@@ -27,3 +27,18 @@ formSearch.addEventListener("submit", (e) => {
   }
   window.location.href = url;
 });
+//---------------------------------------------------------------------------
+
+//------------------xu li phan pagination------------------------------------
+const buttonPagination = document.querySelectorAll("[button-pagination]");
+buttonPagination.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    const currentPage = button.getAttribute("button-pagination");
+
+    const url = new URL(window.location.href);
+    if (currentPage) {
+      url.searchParams.set("page", currentPage);
+    } else url.searchParams.delete("page");
+    window.location.href = url;
+  });
+});
