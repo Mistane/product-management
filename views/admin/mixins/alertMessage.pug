@@ -1,0 +1,9 @@
+mixin alert-message(time)
+  - if (messages.success)
+    .message.info
+      div(
+        class="alert alert-success"
+        show-alert
+        data-time="5000"
+      ) #{messages.success}
+        span(close-alert) X
