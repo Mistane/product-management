@@ -38,6 +38,7 @@ class productsController {
       (objectPagination.currentPage - 1) * objectPagination.limitItems;
     //-------------------------------------------
     const products = await Product.find(find)
+      .sort({ position: "desc" })
       .limit(objectPagination.limitItems)
       .skip(objectPagination.productsSkip);
 
@@ -72,6 +73,13 @@ class productsController {
           { _id: { $in: ids } },
           { deleted: true, deletedAt: new Date() },
         );
+        break;
+      case "change-pos":
+        //lay ra id va pos tu ids
+        ids.forEach(async (item) => {
+          const [id, pos] = item.split("-");
+          await Product.updateOne({ _id: id }, { position: pos });
+        });
         break;
       default:
         break;

@@ -50,9 +50,15 @@ formChangeMulti.addEventListener("submit", (e) => {
     }
     let ids = [];
     boxChecked.forEach((box) => {
-      ids.push(box.value);
+      if (option === "change-pos") {
+        const pos = box.closest("tr").querySelector("[name='position']").value;
+        ids.push(`${box.value}-${pos}`);
+      } else {
+        ids.push(box.value);
+      }
     });
     input.value = ids.join(",");
+    console.log(ids);
     formChangeMulti.submit();
   }
 });

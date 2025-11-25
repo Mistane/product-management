@@ -3,7 +3,7 @@ const Product = require("../.././models/project.model");
 class productController {
   //[GET] /products
   async index(req, res) {
-    const products = await Product.find({});
+    const products = await Product.find({}).sort({ position: "desc" });
     const newProducts = products.map((product) => {
       product.newPrice = (
         (product.price * (100 - product.discountPercentage)) /
