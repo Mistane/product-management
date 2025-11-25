@@ -1,4 +1,8 @@
 extends ../.././layouts/default
+include ../.././mixins/filterStatus
+include ../.././mixins/search
+include ../.././mixins/pagination
+include ../.././mixins/formChangeMulti
 
 block main
   h1 Danh sach san pham
@@ -7,33 +11,15 @@ block main
       .card.mb-3
         .row
           .col-6
-            .card-header Bo loc va tim kiem
-            .card-body
-              each item in filter
-                button(
-                  class=item.class == "active"
-                    ? "btn btn-sm ml-1 btn-outline-success active"
-                    : "btn btn-sm ml-1 btn-outline-success"
-                  button-status=item.status
-                  ) #{item.name}
+            +filter-status(filterStatus)
           .col-6
-            form(id="form-search")
-              .input-group
-                input(
-                  type="text"
-                  placeholder="Nhap tu khoa"
-                  name="keyword"
-                  value=keyword
-                )
-              .input-group-append
-                button(
-                  type="submit"
-                  class="btn btn-success"
-                ) Tim kiem
-
+            +search(keyword)
+      +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
       table.table
         thead
           tr
+            th
+              input(type="checkbox" name="checkall")
             th STT
             th Hinh anh
             th Tieu de
@@ -43,19 +29,49 @@ block main
           tbody
             each product,index in products
               tr
-                td #{index + 1}
+                td
+                  input(type="checkbox" name="check" value=product.id)
+                td #{(objectPagination.currentPage-1) * objectPagination.limitItems+index+1}
                 td
                   img(src=`#{product.thumbnail}`)
                 td #{product.title}
                 td #{product.price}$
                 if product.status == "active"
                   td
-                    p.text-success Hoat dong
+                    button(
+                      class="btn btn-sm btn-success"
+                      button-change-status
+                      data-id=product.id
+                      data-status="inactive"
+                    ) Hoat dong
                 else
                   td
-                    p.text-danger Dung hoat dong
+                    button(
+                      class="btn btn-sm btn-danger"
+                      button-change-status
+                      data-id=product.id
+                      data-status="active"
+                    ) Dung hoat dong
                 td
                   button.btn.btn-sm.btn-warning Sua
-                  button.btn.btn-sm.btn-danger Xoa
-                
-          
+                  button(
+                    class="btn btn-sm btn-danger"
+                    button-delete
+                    data-id=product.id
+                  ) Xoa
+    +pagination(objectPagination)
+
+    form(
+      action=""
+      method="POST"
+      id="form-change-status"
+      data-path=`${prefixAdmin}/products/change-status`
+    )
+
+    form(
+      action=""
+      method="POST"
+      id="form-delete-product"
+      data-path=`${prefixAdmin}/products/delete`
+    )
+  script(src="/admin/js/products.js")
