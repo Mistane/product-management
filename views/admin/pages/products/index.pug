@@ -43,7 +43,9 @@ block main
                   input(type="checkbox" name="check" value=product.id)
                 td #{(objectPagination.currentPage-1) * objectPagination.limitItems+index+1}
                 td
-                  img(src=`#{product.thumbnail}`)
+                  img(src=product.thumbnail
+                      style="width: 150px; height: 100px; object-fit: cover"
+                  )
                 td #{product.title}
                 td #{product.price}$
                 td

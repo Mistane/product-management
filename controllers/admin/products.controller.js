@@ -2,6 +2,7 @@ const Product = require("../.././models/project.model");
 const filterStatusHelper = require("../.././helpers/filterStatus");
 const searchHelper = require("../.././helpers/search");
 const paginationHelper = require("../.././helpers/pagination");
+const systemConfig = require("../.././config/system");
 
 class productsController {
   //[GET] /admin/products
@@ -53,6 +54,7 @@ class productsController {
   //[PATCH] /admin/products/change-status/:status/:id
   async changeStatus(req, res) {
     const { status, id } = req.params;
+    req.flash("success", "Cap nhat trang thai thanh cong !");
     await Product.updateOne({ _id: id }, { status: status });
     res.redirect(req.get("Referrer") || "/");
   }
@@ -84,6 +86,10 @@ class productsController {
       default:
         break;
     }
+    req.flash(
+      "success",
+      `Cap nhat trang thai cho ${ids.length} san pham thanh cong !`,
+    );
     res.redirect(req.get("Referrer") || "/");
   }
 
@@ -94,7 +100,31 @@ class productsController {
       { _id: id },
       { deleted: true, deletedAt: new Date() },
     );
+    req.flash("success", "Xoa san pham thanh cong !");
     res.redirect(req.get("Referrer") || "/");
+  }
+
+  //[GET] /admin/products/create
+  async create(req, res) {
+    res.render("./admin/pages/products/create", {
+      pageTitle: "Trang tao san pham",
+    });
+  }
+
+  //[POST] /admin/products/create
+  async createProduct(req, res) {
+    if (req.body.position === "") {
+      const count = await Product.countDocuments();
+      req.body.position = count + 1;
+    } else req.body.position = parseInt(req.body.position);
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
   }
 }
 

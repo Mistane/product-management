@@ -42,3 +42,20 @@ buttonPagination.forEach((button) => {
     window.location.href = url;
   });
 });
+//-------------------------------
+
+//---------------close alert-------------
+const alertMsg = document.querySelector("[show-alert]");
+if (alertMsg) {
+  const time = parseInt(alertMsg.getAttribute("data-time"));
+  setTimeout(() => {
+    alertMsg.classList.add("alert-hidden");
+  }, time);
+
+  const delMsgBtn = alertMsg.querySelector("span");
+  if (delMsgBtn) {
+    delMsgBtn.addEventListener("click", (e) => {
+      alertMsg.classList.add("alert-hidden");
+    });
+  }
+}

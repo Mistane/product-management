@@ -5,6 +5,7 @@ block main
   form(
     method="post"
     action=`${prefixAdmin}/products/create`
+    enctype="multipart/form-data"
   )
     div(class="form-group")
       label(for="title") Tieu de
@@ -57,7 +58,7 @@ block main
       input(
         class="form-control"
         id="img"
-        type="text"
+        type="file"
         name="thumbnail"
       )
     div(class="form-group")
