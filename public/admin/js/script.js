@@ -16,17 +16,19 @@ buttons.forEach((button) => {
 
 //-------------------xu li phan tim kiem-----------------------------------
 const formSearch = document.querySelector("#form-search");
-formSearch.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const input = document.querySelector("#form-search input").value;
-  let url = new URL(window.location.href);
-  if (input) {
-    url.searchParams.set("keyword", input);
-  } else {
-    url.searchParams.delete("keyword");
-  }
-  window.location.href = url;
-});
+if (formSearch) {
+  formSearch.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = document.querySelector("#form-search input").value;
+    let url = new URL(window.location.href);
+    if (input) {
+      url.searchParams.set("keyword", input);
+    } else {
+      url.searchParams.delete("keyword");
+    }
+    window.location.href = url;
+  });
+}
 //---------------------------------------------------------------------------
 
 //------------------xu li phan pagination------------------------------------
@@ -58,4 +60,18 @@ if (alertMsg) {
       alertMsg.classList.add("alert-hidden");
     });
   }
+}
+//-----------------------------------------
+
+//----------preview image--------------------
+const previewImageInput = document.querySelector("[preview-image-input]");
+console.log(previewImageInput);
+if (previewImageInput) {
+  previewImageInput.addEventListener("change", (e) => {
+    const previewSection = document.querySelector("[preview-image]");
+    const image = e.target.files[0];
+    previewSection.src = URL.createObjectURL(image);
+
+    console.log(previewSection);
+  });
 }

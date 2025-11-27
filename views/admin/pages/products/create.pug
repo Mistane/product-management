@@ -60,7 +60,14 @@ block main
         id="img"
         type="file"
         name="thumbnail"
+        preview-image-input
       )
+      div(class="mt-4")
+        img(
+          src=""
+          preview-image
+          style="width: 200px; height: auto"
+        )
     div(class="form-group")
       label(for="position") Vi tri
       input(
