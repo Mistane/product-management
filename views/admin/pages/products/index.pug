@@ -83,6 +83,10 @@ block main
                     button-delete
                     data-id=product.id
                   ) Xoa
+                  a(
+                    class="btn btn-secondary"
+                    href=`${prefixAdmin}/products/detail/${product.id}`
+                  ) Chinh sua
     +pagination(objectPagination)
 
     form(

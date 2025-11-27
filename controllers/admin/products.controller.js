@@ -112,7 +112,7 @@ class productsController {
   }
 
   //[POST] /admin/products/create
-  async createProduct(req, res) {
+  async createPost(req, res) {
     if (req.body.position === "") {
       const count = await Product.countDocuments();
       req.body.position = count + 1;
@@ -121,10 +121,52 @@ class productsController {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
 
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
+    if (req.file) {
+      req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+
+  //[GET] /admin/product/edit/:id
+  async edit(req, res) {
+    try {
+      const id = req.params.id;
+      const find = { deleted: false };
+      if (id) {
+        find._id = id;
+      }
+      const product = await Product.findOne({ _id: id });
+      res.render("./admin/pages/products/edit", { product: product });
+    } catch {
+      res.redirect(req.get("Referrer") || "/");
+    }
+  }
+
+  //[PATCH] /admin/products/edit/:id
+  async editPatch(req, res) {
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.position = parseInt(req.body.position);
+    req.body.stock = parseInt(req.body.stock);
+    req.body.price = parseInt(req.body.price);
+    const id = req.params.id;
+    await Product.updateOne({ _id: id }, req.body);
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+  }
+
+  //[GET] /admin/products/detail/:id
+  async detail(req, res) {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+    const product = await Product.findOne(find);
+    console.log(product);
+    res.render("admin/pages/products/detail", {
+      pageTitle: product.title,
+      product: product,
+    });
   }
 }
 
