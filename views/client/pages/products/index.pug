@@ -4,11 +4,12 @@ block main
   .container
     .product-list
       each product in products
-        .product-item.row
+        div(class="product-item row" style="height: 300px")
           .col-12
-            img(src=`#{product.thumbnail}` alt=`#{product.title}` class="product-img")
+            img(src=product.thumbnail style="width:100%; height: 75px" alt=product.title class="product-img")
           .col-12
-            p.product-name #{product.title}
+            a(href=`/products/detail/${product.slug}`)
+              p.product-name #{product.title}
             p.product-price #{product.newPrice}$
             p.product-oldPrice #{product.price}$
             p.product-discount #{product.discountPercentage}%
