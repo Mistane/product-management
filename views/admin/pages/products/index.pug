@@ -6,7 +6,8 @@ include ../.././mixins/formChangeMulti
 include ../.././mixins/alertMessage
 
 block main
-  +alert-message(5000)
+  +alert-success(5000)
+  +alert-error(5000)
   h1 Danh sach san pham
   .card
     .card-body
@@ -73,7 +74,10 @@ block main
                       data-status="active"
                     ) Dung hoat dong
                 td
-                  button.btn.btn-sm.btn-warning Sua
+                  a(
+                    class="btn btn-warning"
+                    href=`${prefixAdmin}/products/edit/${product.id}`
+                  ) Sua
                   button(
                     class="btn btn-sm btn-danger"
                     button-delete

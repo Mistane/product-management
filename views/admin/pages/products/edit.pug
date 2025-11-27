@@ -4,10 +4,10 @@ include ../.././mixins/alertMessage.pug
 block main
   +alert-error(5000) 
   
-  h1(class="mb-4") Them moi san pham
+  h1(class="mb-4") Chinh sua san pham
   form(
     method="post"
-    action=`${prefixAdmin}/products/create`
+    action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
     enctype="multipart/form-data"
   )
     div(class="form-group")
@@ -17,6 +17,7 @@ block main
         id="title"
         type="text"
         name="title"
+        value=product.title
       )
     div(class="form-group")
       label(for="desc") Mo ta
@@ -25,6 +26,7 @@ block main
         id="desc"
         rows="5"
         name="description"
+        value=product.description
       )
     div(class="form-group")
       label(for="price") Gia
@@ -32,9 +34,9 @@ block main
         class="form-control"
         id="price"
         type="number"
-        value="0"
         min="0"
         name="price"
+        value=product.price
       )
     div(class="form-group")
       label(for="discount") % Giam gia
@@ -43,8 +45,8 @@ block main
         id="discount"
         type="number"
         name="discountPercentage"
-        value="0"
         min="0"
+        value=product.discountPercentage
       )
     div(class="form-group")
       label(for="stock") So luong
@@ -52,9 +54,9 @@ block main
         class="form-control"
         id="stock"
         type="number"
-        value="0"
         min="0"
         name="stock"
+        value=product.stock
       )
     div(class="form-group")
       label(for="img") Anh
@@ -67,7 +69,7 @@ block main
       )
       div(class="mt-4")
         img(
-          src=""
+          src=product.thumbnail
           preview-image
           style="width: 200px; height: auto"
         )
@@ -79,6 +81,7 @@ block main
         type="number"
         name="position"
         min="1"
+        value=product.position
         placeholder="Tu dong tang"
       )
     div(class="form-group form-check form-check-inline")
@@ -88,7 +91,7 @@ block main
         id="statusActive"
         name="status"
         value="active"
-        checked
+        checked=product.status == "active" ? true : false
       )
       label(for="statusActive" class="form-check-label") Hoat dong
     div(class="form-group form-check form-check-inline")
@@ -98,10 +101,11 @@ block main
         id="statusInActive"
         name="status"
         value="inactive"
+        checked=product.status == "inactive" ? true : false
       )
       label(for="statusInActive" class="form-check-label") Dung hoat dong
     div(class="form-group")
       button(
         type="submit"
         class="btn btn-success"
-      ) Gui
+      ) Cap nhat
