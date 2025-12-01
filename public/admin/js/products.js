@@ -82,3 +82,41 @@ if (formDelete) {
     });
   });
 }
+//-----------------------------------------------------------------
+//
+//---------------sort----------------------------------------------
+const sortMenu = document.querySelector("[sort-select]");
+if (sortMenu) {
+  sortMenu.addEventListener("change", (e) => {
+    console.log(e.target.value);
+    const sortDesc = e.target.value;
+    const [sortKey, sortValue] = sortDesc.split("-");
+    let url = new URL(window.location.href);
+    if (sortKey && sortValue) {
+      url.searchParams.set("sortKey", sortKey);
+      url.searchParams.set("sortValue", sortValue);
+    }
+    window.location.href = url;
+  });
+
+  //xu li phan hien tinh nang sort da chon ra giao dien
+  const url = new URL(window.location.href);
+  const sortKey = url.searchParams.get("sortKey");
+  const sortValue = url.searchParams.get("sortValue");
+  if (sortKey && sortValue) {
+    const sortDesc = `${sortKey}-${sortValue}`;
+    sortMenu.querySelector(`[value=${sortDesc}]`).selected = true;
+  }
+
+  //xu li phan button clear
+  const clearSortBtn = document.querySelector("[sort-clear]");
+  if (clearSortBtn) {
+    clearSortBtn.addEventListener("click", (e) => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("sortKey");
+      url.searchParams.delete("sortValue");
+      window.location.href = url;
+    });
+  }
+}
+//-------------------------------------------------------------

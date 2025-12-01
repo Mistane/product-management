@@ -17,6 +17,24 @@ class productController {
       products: newProducts,
     });
   }
+
+  //[GET] /products/detail/:slug
+  async detail(req, res) {
+    try {
+      const find = {
+        deleted: false,
+        status: "active",
+        slug: req.params.slug,
+      };
+      const product = await Product.findOne(find);
+      res.render("client/pages/products/detail", {
+        pageTitle: product.slug,
+        product: product,
+      });
+    } catch {
+      res.redirect("/products");
+    }
+  }
 }
 
 module.exports = new productController();

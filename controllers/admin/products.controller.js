@@ -38,11 +38,20 @@ class productsController {
     objectPagination.productsSkip =
       (objectPagination.currentPage - 1) * objectPagination.limitItems;
     //-------------------------------------------
+
+    //--------sort----------------------------------------
+    let sort = {};
+    const sortKey = req.query.sortKey;
+    const sortValue = req.query.sortValue;
+    if (sortKey && sortValue) {
+      sort[sortKey] = sortValue;
+    } else sort.position = "desc";
     const products = await Product.find(find)
-      .sort({ position: "desc" })
+      .sort(sort)
       .limit(objectPagination.limitItems)
       .skip(objectPagination.productsSkip);
 
+    console.log(products);
     res.render("./admin/pages/products/index", {
       pageTitle: "Trang san pham",
       products,
