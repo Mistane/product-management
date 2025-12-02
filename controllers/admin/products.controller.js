@@ -46,12 +46,12 @@ class productsController {
     if (sortKey && sortValue) {
       sort[sortKey] = sortValue;
     } else sort.position = "desc";
+
     const products = await Product.find(find)
       .sort(sort)
       .limit(objectPagination.limitItems)
       .skip(objectPagination.productsSkip);
 
-    console.log(products);
     res.render("./admin/pages/products/index", {
       pageTitle: "Trang san pham",
       products,
@@ -130,9 +130,6 @@ class productsController {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
 
-    if (req.file) {
-      req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.redirect(`${systemConfig.prefixAdmin}/products`);
@@ -171,7 +168,6 @@ class productsController {
       _id: req.params.id,
     };
     const product = await Product.findOne(find);
-    console.log(product);
     res.render("admin/pages/products/detail", {
       pageTitle: product.title,
       product: product,

@@ -2,7 +2,7 @@ extends ../.././layouts/default
 include ../.././mixins/alertMessage.pug
 
 block main
-  +alert-error(5000) 
+  alert-error(5000) 
   
   h1(class="mb-4") Them moi san pham
   form(
@@ -21,7 +21,7 @@ block main
     div(class="form-group")
       label(for="desc") Mo ta
       textarea(
-        class="form-control"
+        class="form-control textarea-tinymce"
         id="desc"
         rows="5"
         name="description"
@@ -105,3 +105,5 @@ block main
         type="submit"
         class="btn btn-success"
       ) Gui
+  <script type="application/javascript" src= "/tinymce/tinymce.min.js"></script>
+  <script type="application/javascript" src= "/admin/js/my-tinymce-config.js"></script>
