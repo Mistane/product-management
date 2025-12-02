@@ -1,0 +1,106 @@
+extends ../.././layouts/default
+include ../.././mixins/filterStatus
+include ../.././mixins/search
+include ../.././mixins/pagination
+include ../.././mixins/formChangeMulti
+include ../.././mixins/alertMessage
+include ../.././mixins/sort
+
+block main
+  +alert-success(5000)
+  +alert-error(5000)
+  h1 Danh muc san pham pham
+  .card
+    .card-body
+      .card.mb-3
+        .row
+          .col-6
+            +filter-status(filterStatus)
+          .col-6
+            +search(keyword)
+      .row
+        .col-8
+          +form-change-multi(`${prefixAdmin}/products-category/change-multi?_method=PATCH`)
+        .col-4
+          a(
+            class="btn btn-outline-success"
+            href=`${prefixAdmin}/products-category/create`
+          ) + Them moi
+                  
+      +sort()
+      table.table
+        thead
+          tr
+            th
+              input(type="checkbox" name="checkall")
+            th STT
+            th Hinh anh
+            th Tieu de
+            th Vi tri
+            th Trang thai
+            th Hanh dong
+          tbody
+            each product,index in products
+              tr
+                td
+                  input(type="checkbox" name="check" value=product.id)
+                td #{(objectPagination.currentPage-1) * objectPagination.limitItems+index+1}
+                td
+                  img(src=product.thumbnail
+                      style="width: 150px; height: 100px; object-fit: cover"
+                  )
+                td #{product.title}
+                td
+                  input(
+                    type="number"
+                    value=product.position
+                    style="width: 60px"
+                    min="1"
+                    name="position"
+                  )
+                if product.status == "active"
+                  td
+                    button(
+                      class="btn btn-sm btn-success"
+                      button-change-status
+                      data-id=product.id
+                      data-status="inactive"
+                    ) Hoat dong
+                else
+                  td
+                    button(
+                      class="btn btn-sm btn-danger"
+                      button-change-status
+                      data-id=product.id
+                      data-status="active"
+                    ) Dung hoat dong
+                td
+                  a(
+                    class="btn btn-warning"
+                    href=`${prefixAdmin}/products-category/edit/${product.id}`
+                  ) Sua
+                  button(
+                    class="btn btn-sm btn-danger"
+                    button-delete
+                    data-id=product.id
+                  ) Xoa
+                  a(
+                    class="btn btn-secondary"
+                    href=`${prefixAdmin}/products-category/detail/${product.id}`
+                  ) Chinh sua
+    +pagination(objectPagination)
+
+    form(
+      action=""
+      method="POST"
+      id="form-change-status"
+      data-path=`${prefixAdmin}/products-category/change-status`
+    )
+
+    form(
+      action=""
+      method="POST"
+      id="form-delete-product"
+      data-path=`${prefixAdmin}/products-category/delete`
+    )
+  script(src="/admin/js/products-category.js")
