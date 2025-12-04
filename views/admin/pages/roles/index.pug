@@ -1,0 +1,58 @@
+extends ../.././layouts/default
+include ../.././mixins/alertMessage
+
+block main
+  +alert-success(5000)
+  +alert-error(5000)
+  h1 Nhom quyen
+  .card
+    .card-body
+      .card.mb-3
+        .row
+          .col-8
+          .col-4
+            a(
+              class="btn btn-outline-success"
+              href=`${prefixAdmin}/roles/create`
+            ) + Them moi
+      table.table
+        thead
+          tr
+            th STT
+            th Nhom quyen
+            th Mo ta ngan
+            th Hanh dong
+          tbody
+            each role, index in roles
+              tr
+                td #{index + 1}
+                td #{role.title}
+                td #{role.description}
+                td
+                  a(
+                    class="btn btn-warning"
+                    href=`${prefixAdmin}/roles/edit/${role.id}`
+                  ) Sua
+                  button(
+                    class="btn btn-sm btn-danger"
+                    button-delete
+                    data-id=role.id
+                  ) Xoa
+                  a(
+                    class="btn btn-secondary"
+                    href=`${prefixAdmin}/roles/detail/${role.id}`
+                  ) Chinh sua
+    form(
+      action=""
+      method="POST"
+      id="form-change-status"
+      data-path=`${prefixAdmin}/roles/change-status`
+    )
+
+    form(
+      action=""
+      method="POST"
+      id="form-delete-role"
+      data-path=`${prefixAdmin}/roles/delete`
+    )
+  script(src="/admin/js/roles.js")

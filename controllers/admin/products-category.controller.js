@@ -51,7 +51,6 @@ class productsCategoryController {
     const records = await Record.find(find);
 
     const newRecords = createTreeHelper(records);
-    console.log(newRecords);
     res.render("./admin/pages/products-category/index", {
       pageTitle: "Trang danh muc san pham",
       records: newRecords,
@@ -148,7 +147,12 @@ class productsCategoryController {
         find._id = id;
       }
       const product = await Record.findOne({ _id: id });
-      res.render("./admin/pages/products-category/edit", { product: product });
+      const records = await Record.find({});
+      const newRecords = createTreeHelper(records);
+      res.render("./admin/pages/products-category/edit", {
+        product: product,
+        records: newRecords,
+      });
     } catch {
       res.redirect(req.get("Referrer") || "/");
     }

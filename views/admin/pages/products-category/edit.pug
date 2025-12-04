@@ -1,5 +1,6 @@
 extends ../.././layouts/default
 include ../.././mixins/alertMessage.pug
+include ../.././mixins/selectTree.pug
 
 block main
   +alert-error(5000) 
@@ -21,13 +22,14 @@ block main
       )
     div(class="form-group")
       label(for="parent_id") Danh muc cha
-      input(
+      select(
         class="form-control"
         id="parent_id"
         type="text"
         name="parent_id"
-        value=product.parent_id
       )
+        option(value="" disabled selected) --Chon danh muc cha--
+        +select-tree(records, 1, product.parent_id)
     div(class="form-group")
       label(for="desc") Mo ta
       textarea(

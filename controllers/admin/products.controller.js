@@ -1,8 +1,10 @@
 const Product = require("../.././models/project.model");
+const Record = require("../.././models/project.model-category");
 const filterStatusHelper = require("../.././helpers/filterStatus");
 const searchHelper = require("../.././helpers/search");
 const paginationHelper = require("../.././helpers/pagination");
 const systemConfig = require("../.././config/system");
+const createTreeHelper = require("../.././helpers/createCategoryTree");
 
 class productsController {
   //[GET] /admin/products
@@ -115,8 +117,11 @@ class productsController {
 
   //[GET] /admin/products/create
   async create(req, res) {
+    const records = await Record.find({});
+    const newRecords = createTreeHelper(records);
     res.render("./admin/pages/products/create", {
       pageTitle: "Trang tao san pham",
+      records: newRecords,
     });
   }
 
