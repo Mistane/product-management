@@ -2,9 +2,10 @@ const Record = require("../.././models/project.model-category");
 const filterStatusHelper = require("../.././helpers/filterStatus");
 const searchHelper = require("../.././helpers/search");
 const paginationHelper = require("../.././helpers/pagination");
+const createTreeHelper = require("../.././helpers/createCategoryTree");
 const systemConfig = require("../.././config/system");
 
-class productsController {
+class productsCategoryController {
   //[GET] /admin/products-category
   async index(req, res) {
     //------------query--------------------
@@ -47,17 +48,15 @@ class productsController {
       sort[sortKey] = sortValue;
     } else sort.position = "desc";
 
-    const products = await Record.find(find)
-      .sort(sort)
-      .limit(objectPagination.limitItems)
-      .skip(objectPagination.productsSkip);
+    const records = await Record.find(find);
 
+    const newRecords = createTreeHelper(records);
+    console.log(newRecords);
     res.render("./admin/pages/products-category/index", {
       pageTitle: "Trang danh muc san pham",
-      products,
+      records: newRecords,
       filterStatus,
       keyword: objectSearch.keyword,
-      objectPagination,
     });
   }
   //[PATCH] /admin/products-category/change-status/:status/:id
@@ -115,8 +114,13 @@ class productsController {
 
   //[GET] /admin/products-category/create
   async create(req, res) {
+    const records = await Record.find({ deleted: false });
+
+    //create product category tree
+    const newRecords = createTreeHelper(records);
     res.render("./admin/pages/products-category/create", {
       pageTitle: "Trang tao san pham",
+      records: newRecords,
     });
   }
 
@@ -175,4 +179,4 @@ class productsController {
   }
 }
 
-module.exports = new productsController();
+module.exports = new productsCategoryController();

@@ -1,0 +1,53 @@
+mixin title-tree(records, level = 1)
+  - cnt++;
+  - const prefix = new Array(level + 1).join("-- ");
+  each product, index in records
+    tr
+      td
+        input(type="checkbox" name="check" value=product.id)
+      td #{product.index}
+      td
+        img(src=product.thumbnail
+            style="width: 150px; height: 100px; object-fit: cover"
+        )
+      td #{prefix}#{product.title}
+      td
+        input(
+          type="number"
+          value=product.position
+          style="width: 60px"
+          min="1"
+          name="position"
+        )
+      if product.status == "active"
+        td
+          button(
+            class="btn btn-sm btn-success"
+            button-change-status
+            data-id=product.id
+            data-status="inactive"
+          ) Hoat dong
+      else
+        td
+          button(
+            class="btn btn-sm btn-danger"
+            button-change-status
+            data-id=product.id
+            data-status="active"
+          ) Dung hoat dong
+      td
+        a(
+          class="btn btn-warning"
+          href=`${prefixAdmin}/products-category/edit/${product.id}`
+        ) Sua
+        button(
+          class="btn btn-sm btn-danger"
+          button-delete
+          data-id=product.id
+        ) Xoa
+        a(
+          class="btn btn-secondary"
+            href=`${prefixAdmin}/products-category/detail/${product.id}`
+          ) Chinh sua
+      if(product.children)
+        +title-tree(product.children, level + 1)
