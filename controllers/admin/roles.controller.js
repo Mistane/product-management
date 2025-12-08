@@ -35,6 +35,22 @@ class rolesController {
     await Role.updateOne({ _id: id }, req.body);
     res.redirect(`${systemConfig.prefixAdmin}/roles`);
   }
+
+  //[GET] ./admin/roles/permissions
+  async permissions(req, res) {
+    const find = { deleted: false };
+    const records = await Role.find(find);
+    res.render("./admin/pages/roles/permissions", { records });
+  }
+
+  //[PATCH] ./admin/roles/permissions
+  async permissionsPatch(req, res) {
+    const datas = JSON.parse(req.body.data);
+    datas.forEach(async (data) => {
+      await Role.updateOne({ _id: data.id }, { permissions: data.permissions });
+    });
+    res.redirect(req.get("referrer") || "/");
+  }
 }
 
 module.exports = new rolesController();
