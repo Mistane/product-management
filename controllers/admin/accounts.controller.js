@@ -56,7 +56,6 @@ class accountsController {
       _id: { $ne: id },
       email: req.body.email,
     });
-    console.log(isExist);
     if (isExist) {
       console.log(isExist);
       console.log("Da ton tai");
