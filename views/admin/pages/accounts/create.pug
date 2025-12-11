@@ -3,91 +3,94 @@ include ../.././mixins/alertMessage.pug
 include ../.././mixins/selectTree.pug
 
 block main
-  alert-error(5000) 
-  
-  h1(class="mb-4") Them moi tai khoan
-  form(
-    method="post"
-    action=`${prefixAdmin}/accounts/create`
-    enctype="multipart/form-data"
-  )
-    div(class="form-group")
-      label(for="fullName") Ho ten *
-      input(
-        class="form-control"
-        id="fullName"
-        type="text"
-        name="fullName"
-      )
-    div(class="form-group")
-      label(for="email") Email *
-      input(
-        class="form-control"
-        id="email"
-        type="text"
-        name="email"
-      )
-    div(class="form-group")
-      label(for="password") Mat khau
-      input(
-        class="form-control"
-        id="password"
-        type="password"
-        name="password"
-      )
-    div(class="form-group")
-      label(for="phone") So dien thoai
-      input(
-        class="form-control"
-        id="phone"
-        type="text"
-        name="phone"
-      )
-    div(class="form-group")
-      label(for="img") Anh
-      input(
-        class="form-control"
-        id="img"
-        type="file"
-        name="avatar"
-        preview-image-input
-      )
-      div(class="mt-4")
-        img(
-          src=""
-          preview-image
-          style="width: 200px; height: auto"
+  if(permissions.includes("account_create"))
+    alert-error(5000) 
+    
+    h1(class="mb-4") Them moi tai khoan
+    form(
+      method="post"
+      action=`${prefixAdmin}/accounts/create`
+      enctype="multipart/form-data"
+    )
+      div(class="form-group")
+        label(for="fullName") Ho ten *
+        input(
+          class="form-control"
+          id="fullName"
+          type="text"
+          name="fullName"
         )
-    div(class="form-group")
-      label() Phan quyen 
-      select(class="form-control" name="role_id")
-        option(value="" disable checked) Chon phan quyen
-        each role in roles
-          option(value=role.id ) #{role.title}
+      div(class="form-group")
+        label(for="email") Email *
+        input(
+          class="form-control"
+          id="email"
+          type="text"
+          name="email"
+        )
+      div(class="form-group")
+        label(for="password") Mat khau
+        input(
+          class="form-control"
+          id="password"
+          type="password"
+          name="password"
+        )
+      div(class="form-group")
+        label(for="phone") So dien thoai
+        input(
+          class="form-control"
+          id="phone"
+          type="text"
+          name="phone"
+        )
+      div(class="form-group")
+        label(for="img") Anh
+        input(
+          class="form-control"
+          id="img"
+          type="file"
+          name="avatar"
+          preview-image-input
+        )
+        div(class="mt-4")
+          img(
+            src=""
+            preview-image
+            style="width: 200px; height: auto"
+          )
+      div(class="form-group")
+        label() Phan quyen 
+        select(class="form-control" name="role_id")
+          option(value="" disable checked) Chon phan quyen
+          each role in roles
+            option(value=role.id ) #{role.title}
 
-    div(class="form-group form-check form-check-inline mt-4")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusActive"
-        name="status"
-        value="active"
-        checked
-      )
-      label(for="statusActive" class="form-check-label") Hoat dong
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusInActive"
-        name="status"
-        value="inactive"
-      )
-      label(for="statusInActive" class="form-check-label") Dung hoat dong
-    div(class="form-group")
-      button(
-        type="submit"
-        class="btn btn-success"
-      ) Tao moi
+      div(class="form-group form-check form-check-inline mt-4")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked
+        )
+        label(for="statusActive" class="form-check-label") Hoat dong
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusInActive"
+          name="status"
+          value="inactive"
+        )
+        label(for="statusInActive" class="form-check-label") Dung hoat dong
+      div(class="form-group")
+        button(
+          type="submit"
+          class="btn btn-success"
+        ) Tao moi
+  else
+    h1 Ban khong co quyen truy cap
   <script type="application/javascript" src= "/tinymce/tinymce.min.js"></script>
   <script type="application/javascript" src= "/admin/js/my-tinymce-config.js"></script>

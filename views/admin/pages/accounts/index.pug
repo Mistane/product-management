@@ -2,70 +2,88 @@ extends ../.././layouts/default
 include ../.././mixins/alertMessage
 
 block main
-  +alert-success(5000)
-  +alert-error(5000)
-  h1 Danh sach tai khoan
-  .card
-    .card-body
-      .card.mb-3
-        .row
-          .col-8
-          .col-4
-            a(
-              class="btn btn-outline-success"
-              href=`${prefixAdmin}/accounts/create`
-            ) + Them moi
-      table.table 
-        thead
-          tr
-            th STT
-            th Avatar
-            th Ho ten 
-            th Phan quyen
-            th Email
-            th Trang thai
-            th Hanh dong
-        tbody
-          each account,index in accounts
+  if(permissions.includes("account_view"))
+    +alert-success(5000)
+    +alert-error(5000)
+    h1 Danh sach tai khoan
+    .card
+      .card-body
+        .card.mb-3
+          .row
+            .col-8
+            if(permissions.includes("account_create"))
+              .col-4
+                a(
+                  class="btn btn-outline-success"
+                  href=`${prefixAdmin}/accounts/create`
+                ) + Them moi
+        table.table 
+          thead
             tr
-              td #{index + 1}
-              td
-                img(src=account.avatar
-                    style="width: 150px; height: 100px; object-fit: cover"
-                )
-              td #{account.fullName}
-              each role in roles
-                if(role.id == account.role_id)
-                  td #{role.title}
-              td #{account.email}
-              if account.status == "active"
+              th STT
+              th Avatar
+              th Ho ten 
+              th Phan quyen
+              th Email
+              th Trang thai
+              th Hanh dong
+          tbody
+            each account,index in accounts
+              tr
+                td #{index + 1}
                 td
-                  button(
-                    class="btn btn-sm btn-success"
-                    button-change-status
-                    data-id=account.id
-                    data-status="inactive"
-                  ) Hoat dong
-              else
+                  img(src=account.avatar
+                      style="width: 150px; height: 100px; object-fit: cover"
+                  )
+                td #{account.fullName}
+                each role in roles
+                  if(role.id == account.role_id)
+                    td #{role.title}
+                td #{account.email}
+                if(permissions.includes("account_edit"))
+                  if account.status == "active"
+                    td
+                      button(
+                        class="btn btn-sm btn-success"
+                        button-change-status
+                        data-id=account.id
+                        data-status="inactive"
+                      ) Hoat dong
+                  else
+                    td
+                      button(
+                        class="btn btn-sm btn-danger"
+                        button-change-status
+                        data-id=product.id
+                        data-status="active"
+                      ) Dung hoat dong
+                else
+                  if account.status == "active"
+                    td
+                      button(
+                        class="btn btn-sm btn-success"
+                      ) Hoat dong
+                  else
+                    td
+                      button(
+                        class="btn btn-sm btn-danger"
+                      ) Dung hoat dong
                 td
-                  button(
-                    class="btn btn-sm btn-danger"
-                    button-change-status
-                    data-id=product.id
-                    data-status="active"
-                  ) Dung hoat dong
-              td
-                a(
-                  class="btn btn-warning"
-                  href=`${prefixAdmin}/accounts/edit/${account.id}`
-                ) Sua
-                button(
-                  class="btn btn-sm btn-danger"
-                  button-delete
-                  data-id=account.id
-                ) Xoa
-                a(
-                  class="btn btn-secondary"
-                  href=`${prefixAdmin}/accounts/detail/${account.id}`
-                ) Chinh sua
+                  if(permissions.includes("account_edit"))
+                    a(
+                      class="btn btn-warning"
+                      href=`${prefixAdmin}/accounts/edit/${account.id}`
+                    ) Sua
+                  if(permissions.includes("account_delete"))
+                    button(
+                      class="btn btn-sm btn-danger"
+                      button-delete
+                      data-id=account.id
+                    ) Xoa
+                  a(
+                    class="btn btn-secondary"
+                    href=`${prefixAdmin}/accounts/detail/${account.id}`
+                  ) Chi tiet
+  else
+    h1 Ban khong co quyen truy cap
   script(src="/admin/js/roles.js")
