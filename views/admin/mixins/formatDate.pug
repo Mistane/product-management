@@ -1,0 +1,8 @@
+mixin dateTime(date)
+  p #{moment(date).format("LLLL")}
+  
+mixin date(date) 
+  p #{moment(date).format("DD/MM/YYYY")}
+
+mixin time(date) 
+  p #{moment(date).format("hh:mm:ss")}

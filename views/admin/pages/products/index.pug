@@ -5,6 +5,7 @@ include ../.././mixins/pagination
 include ../.././mixins/formChangeMulti
 include ../.././mixins/alertMessage
 include ../.././mixins/sort
+include ../.././mixins/formatDate
 
 block main
   if(permissions.includes("product_view"))
@@ -42,6 +43,7 @@ block main
               th Gia
               th Vi tri
               th Trang thai
+              th Nguoi tao
               th Hanh dong
             tbody
               each product,index in products
@@ -63,7 +65,6 @@ block main
                       min="1"
                       name="position"
                     )
-
                   if(permissions.includes("product_edit"))
                     if product.status == "active"
                       td
@@ -92,6 +93,11 @@ block main
                         button(
                           class="btn btn-sm btn-danger"
                         ) Dung hoat dong
+                  td
+                    p Enanan
+                    if(product.createdBy.createdAt)
+                      +date(product.createdBy.createdAt)
+                      +time(product.createdBy.createdAt)
                   td
                     if(permissions.includes("product_edit"))
                       a(

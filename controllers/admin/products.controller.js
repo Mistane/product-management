@@ -5,6 +5,7 @@ const searchHelper = require("../.././helpers/search");
 const paginationHelper = require("../.././helpers/pagination");
 const systemConfig = require("../.././config/system");
 const createTreeHelper = require("../.././helpers/createCategoryTree");
+const moment = require("moment");
 
 class productsController {
   //[GET] /admin/products
@@ -54,12 +55,16 @@ class productsController {
       .limit(objectPagination.limitItems)
       .skip(objectPagination.productsSkip);
 
+    //su dung moment
+    const now = moment(Date.now()).format("LLLL");
+    console.log(now);
     res.render("./admin/pages/products/index", {
       pageTitle: "Trang san pham",
       products,
       filterStatus,
       keyword: objectSearch.keyword,
       objectPagination,
+      moment,
     });
   }
   //[PATCH] /admin/products/change-status/:status/:id
@@ -109,7 +114,12 @@ class productsController {
     const { id } = req.params;
     await Product.updateOne(
       { _id: id },
-      { deleted: true, deletedAt: new Date() },
+      {
+        deletedBy: {
+          account_id: id,
+          deletedAt: Date.now(),
+        },
+      },
     );
     req.flash("success", "Xoa san pham thanh cong !");
     res.redirect(req.get("Referrer") || "/");
@@ -134,7 +144,10 @@ class productsController {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
-
+    req.body.createdBy = {
+      account_id: res.locals.user.id,
+      createdAt: Date.now(),
+    };
     const newProduct = new Product(req.body);
     await newProduct.save();
     res.redirect(`${systemConfig.prefixAdmin}/products`);
