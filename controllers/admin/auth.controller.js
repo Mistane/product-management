@@ -6,7 +6,13 @@ const md5 = require("md5");
 class accountsController {
   //[GET] ./admin/auth/login
   async login(req, res) {
-    res.render("./admin/pages/auth/login");
+    const token = req.cookies.token;
+    const user = await Account.findOne({ deleted: false, token });
+    if (token && user) {
+      res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+    } else {
+      res.render("./admin/pages/auth/login");
+    }
   }
 
   //[POST] ./admin/roles/login
