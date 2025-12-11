@@ -1,9 +1,16 @@
 .sidebar
-  a(href=`${prefixAdmin}`) Trang dashboard
-  a(href=`${prefixAdmin}/products-category`) Danh mục sản phẩm
-  a(href=`${prefixAdmin}/products`) Danh sách sản phẩm
-  a(href=`${prefixAdmin}/roles`) Danh sách nhom quyen
-  a(href=`${prefixAdmin}/roles/permissions`) Phan quyen 
+  if(permissions.length > 0)
+    a(href=`${prefixAdmin}/dashboard`) Trang dashboard
+    if(permissions.includes("product-category_view"))
+      a(href=`${prefixAdmin}/products-category`) Danh mục sản phẩm
+    if(permissions.includes("product_view"))
+      a(href=`${prefixAdmin}/products`) Danh sách sản phẩm
+    if(permissions.includes("account_view"))
+      a(href=`${prefixAdmin}/accounts`) Danh sách tai khoan
+    if(permissions.includes("role_view"))
+      a(href=`${prefixAdmin}/roles`) Danh sách nhom quyen
+    if(permissions.includes("role_permissions"))
+      a(href=`${prefixAdmin}/roles/permissions`) Phan quyen 
 
   
   

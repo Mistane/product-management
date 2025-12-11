@@ -3,8 +3,9 @@ mixin title-tree(records, level = 1)
   - const prefix = new Array(level + 1).join("-- ");
   each product, index in records
     tr
-      td
-        input(type="checkbox" name="check" value=product.id)
+      if(permissions.includes("product-category_edit"))
+        td
+          input(type="checkbox" name="check" value=product.id)
       td #{product.index}
       td
         img(src=product.thumbnail
@@ -19,35 +20,50 @@ mixin title-tree(records, level = 1)
           min="1"
           name="position"
         )
-      if product.status == "active"
-        td
-          button(
-            class="btn btn-sm btn-success"
-            button-change-status
-            data-id=product.id
-            data-status="inactive"
-          ) Hoat dong
+      if(permissions.includes("product-category_edit"))
+        if product.status == "active" 
+          td
+            button(
+              class="btn btn-sm btn-success"
+              button-change-status
+              data-id=product.id
+              data-status="inactive"
+            ) Hoat dong
+        else
+          td
+            button(
+              class="btn btn-sm btn-danger"
+              button-change-status
+              data-id=product.id
+              data-status="active"
+            ) Dung hoat dong
       else
-        td
+        if product.status == "active" 
+          td
+            button(
+              class="btn btn-sm btn-success"
+            ) Hoat dong
+        else
+          td
+            button(
+              class="btn btn-sm btn-danger"
+            ) Dung hoat dong
+        
+      td
+        if(permissions.includes("product-category_edit"))
+          a(
+            class="btn btn-warning"
+            href=`${prefixAdmin}/products-category/edit/${product.id}`
+          ) Sua
+        if(permissions.includes("product-category_delete"))
           button(
             class="btn btn-sm btn-danger"
-            button-change-status
+            button-delete
             data-id=product.id
-            data-status="active"
-          ) Dung hoat dong
-      td
-        a(
-          class="btn btn-warning"
-          href=`${prefixAdmin}/products-category/edit/${product.id}`
-        ) Sua
-        button(
-          class="btn btn-sm btn-danger"
-          button-delete
-          data-id=product.id
-        ) Xoa
+          ) Xoa
         a(
           class="btn btn-secondary"
             href=`${prefixAdmin}/products-category/detail/${product.id}`
-          ) Chinh sua
+          ) Chi tiet
       if(product.children)
         +title-tree(product.children, level + 1)

@@ -3,34 +3,37 @@ include ../.././mixins/alertMessage.pug
 include ../.././mixins/selectTree.pug
 
 block main
-  alert-error(5000) 
-  
-  h1(class="mb-4") Them moi nhom quyen
-  form(
-    method="post"
-    action=`${prefixAdmin}/roles/edit/${role.id}?_method=PATCH`
-  )
-    div(class="form-group")
-      label(for="title") Tieu de
-      input(
-        class="form-control"
-        name="title"
-        id="title"
-        value=role.title
-      )
-    div(class="form-group")
-      label(for="desc") Mo ta
-      input(
-        class="form-control"
-        name="description"
-        id="desc"
-        value=role.description
-      )
+  if(permissions.includes("role_edit"))
+    alert-error(5000) 
     
-    div(class="form-group mt-4")
-      button(
-        type="submit"
-        class="btn btn-success"
-      ) Tao moi
+    h1(class="mb-4") Them moi nhom quyen
+    form(
+      method="post"
+      action=`${prefixAdmin}/roles/edit/${role.id}?_method=PATCH`
+    )
+      div(class="form-group")
+        label(for="title") Tieu de
+        input(
+          class="form-control"
+          name="title"
+          id="title"
+          value=role.title
+        )
+      div(class="form-group")
+        label(for="desc") Mo ta
+        input(
+          class="form-control"
+          name="description"
+          id="desc"
+          value=role.description
+        )
+      
+      div(class="form-group mt-4")
+        button(
+          type="submit"
+          class="btn btn-success"
+        ) Tao moi
+  else
+    h1 Ban khong co quyen truy cap
   <script type="application/javascript" src= "/tinymce/tinymce.min.js"></script>
   <script type="application/javascript" src= "/admin/js/my-tinymce-config.js"></script>

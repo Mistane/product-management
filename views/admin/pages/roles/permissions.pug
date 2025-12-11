@@ -2,76 +2,128 @@ extends ../.././layouts/default
 include ../.././mixins/alertMessage
 
 block main
-  .div(data=records)
-  .row
-    .col-8
-      h1 Thiet lap phan quyen
-    .col-4.mt-2
-      button(
-        class="btn btn-success"
-        type="submit"
-        edit-perm-btn
-      ) Cap nhat
+  if(permissions.includes("role_permissions"))
+    .div(data=records)
+    .row
+      .col-8
+        h1 Thiet lap phan quyen
+      .col-4.mt-2
+        button(
+          class="btn btn-success"
+          type="submit"
+          edit-perm-btn
+        ) Cap nhat
 
-  table(
-    class="table mt-3"
-    permissions-table
-  )
-    thead
-      tr
-        td <b> Tinh nang </b>
-        each item in records
-          td(class="text-center") <b>#{item.title}</b>
-    tbody
-      tr(data-name="")
-        td
-        each item in records
+    table(
+      class="table mt-3"
+      permissions-table
+    )
+      thead
+        tr
+          td <b> Tinh nang </b>
+          each item in records
+            td(class="text-center") <b>#{item.title}</b>
+      tbody
+        tr(data-name="")
           td
-            input(type="text" value=item.id class="d-none")
-      tr
-        td(colspan="4") <b>Danh muc san pham</b>
-      tr(data-name="product-category_view")
-        td Xem
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr(data-name="product-category_create")
-        td Them moi
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr(data-name="product-category_edit")
-        td Chinh sua
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr(data-name="product-category_delete")
-        td Xoa
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr
-        td(colspan="4") <b>Danh sach san pham</b>
-      tr(data-name="product_view")
-        td Xem
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr(data-name="product_create")
-        td Them moi
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr(data-name="product_edit")
-        td Chinh sua
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
-      tr(data-name="product_delete")
-        td Xoa
-        each item in records
-          td(class="text-center")
-            input(type="checkbox")
+          each item in records
+            td
+              input(type="text" value=item.id class="d-none")
+        tr
+          td(colspan="4") <b>Danh muc san pham</b>
+        tr(data-name="product-category_view")
+          td Xem
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="product-category_create")
+          td Them moi
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="product-category_edit")
+          td Chinh sua
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="product-category_delete")
+          td Xoa
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr
+          td(colspan="4") <b>Danh sach san pham</b>
+        tr(data-name="product_view")
+          td Xem
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="product_create")
+          td Them moi
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="product_edit")
+          td Chinh sua
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="product_delete")
+          td Xoa
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr
+          td(colspan="4") <b>Danh sach tai khoan</b>
+        tr(data-name="account_view")
+          td Xem
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="account_create")
+          td Them moi
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="account_edit")
+          td Chinh sua
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="account_delete")
+          td Xoa
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr
+          td(colspan="4") <b>Nhom quyen</b>
+        tr(data-name="role_view")
+          td Xem
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="role_create")
+          td Them moi
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="role_edit")
+          td Chinh sua
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="role_delete")
+          td Xoa
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+        tr(data-name="role_permissions")
+          td Phan Quyen
+          each item in records
+            td(class="text-center")
+              input(type="checkbox")
+  else
+    h1 Ban khong co quyen truy cap
   form(
     permissions-edit-form
     method="post"

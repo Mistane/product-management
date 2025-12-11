@@ -7,90 +7,108 @@ include ../.././mixins/alertMessage
 include ../.././mixins/sort
 
 block main
-  +alert-success(5000)
-  +alert-error(5000)
-  h1 Danh sach san pham
-  .card
-    .card-body
-      .card.mb-3
+  if(permissions.includes("product_view"))
+    +alert-success(5000)
+    +alert-error(5000)
+    h1 Danh sach san pham
+    .card
+      .card-body
+        .card.mb-3
+          .row
+            .col-6
+              +filter-status(filterStatus)
+            .col-6
+              +search(keyword)
         .row
-          .col-6
-            +filter-status(filterStatus)
-          .col-6
-            +search(keyword)
-      .row
-        .col-8
-          +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-        .col-4
-          a(
-            class="btn btn-outline-success"
-            href=`${prefixAdmin}/products/create`
-          ) + Them moi
-                  
-      +sort()
-      table.table
-        thead
-          tr
-            th
-              input(type="checkbox" name="checkall")
-            th STT
-            th Hinh anh
-            th Tieu de
-            th Gia
-            th Vi tri
-            th Trang thai
-            th Hanh dong
-          tbody
-            each product,index in products
-              tr
-                td
-                  input(type="checkbox" name="check" value=product.id)
-                td #{(objectPagination.currentPage-1) * objectPagination.limitItems+index+1}
-                td
-                  img(src=product.thumbnail
-                      style="width: 150px; height: 100px; object-fit: cover"
-                  )
-                td #{product.title}
-                td #{product.price}$
-                td
-                  input(
-                    type="number"
-                    value=product.position
-                    style="width: 60px"
-                    min="1"
-                    name="position"
-                  )
-                if product.status == "active"
+          .col-8
+            if(permissions.includes("product_edit"))
+              +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+          .col-4
+            if(permissions.includes("product_create"))
+              a(
+                class="btn btn-outline-success"
+                href=`${prefixAdmin}/products/create`
+              ) + Them moi
+                    
+        +sort()
+        table.table
+          thead
+            tr
+              th
+                input(type="checkbox" name="checkall")
+              th STT
+              th Hinh anh
+              th Tieu de
+              th Gia
+              th Vi tri
+              th Trang thai
+              th Hanh dong
+            tbody
+              each product,index in products
+                tr
                   td
-                    button(
-                      class="btn btn-sm btn-success"
-                      button-change-status
-                      data-id=product.id
-                      data-status="inactive"
-                    ) Hoat dong
-                else
+                    input(type="checkbox" name="check" value=product.id)
+                  td #{(objectPagination.currentPage-1) * objectPagination.limitItems+index+1}
                   td
-                    button(
-                      class="btn btn-sm btn-danger"
-                      button-change-status
-                      data-id=product.id
-                      data-status="active"
-                    ) Dung hoat dong
-                td
-                  a(
-                    class="btn btn-warning"
-                    href=`${prefixAdmin}/products/edit/${product.id}`
-                  ) Sua
-                  button(
-                    class="btn btn-sm btn-danger"
-                    button-delete
-                    data-id=product.id
-                  ) Xoa
-                  a(
-                    class="btn btn-secondary"
-                    href=`${prefixAdmin}/products/detail/${product.id}`
-                  ) Chinh sua
-    +pagination(objectPagination)
+                    img(src=product.thumbnail
+                        style="width: 150px; height: 100px; object-fit: cover"
+                    )
+                  td #{product.title}
+                  td #{product.price}$
+                  td
+                    input(
+                      type="number"
+                      value=product.position
+                      style="width: 60px"
+                      min="1"
+                      name="position"
+                    )
+
+                  if(permissions.includes("product_edit"))
+                    if product.status == "active"
+                      td
+                        button(
+                          class="btn btn-sm btn-success"
+                          button-change-status
+                          data-id=product.id
+                          data-status="inactive"
+                        ) Hoat dong
+                    else
+                      td
+                        button(
+                          class="btn btn-sm btn-danger"
+                          button-change-status
+                          data-id=product.id
+                          data-status="active"
+                        ) Dung hoat dong
+                  else
+                    if product.status == "active"
+                      td
+                        button(
+                          class="btn btn-sm btn-success"
+                        ) Hoat dong
+                    else 
+                      td
+                        button(
+                          class="btn btn-sm btn-danger"
+                        ) Dung hoat dong
+                  td
+                    if(permissions.includes("product_edit"))
+                      a(
+                        class="btn btn-warning"
+                        href=`${prefixAdmin}/products/edit/${product.id}`
+                      ) Sua
+                    if(permissions.includes("product_delete"))
+                      button(
+                        class="btn btn-sm btn-danger"
+                        button-delete
+                        data-id=product.id
+                      ) Xoa
+                    a(
+                      class="btn btn-secondary"
+                      href=`${prefixAdmin}/products/detail/${product.id}`
+                    ) Chi tiet
+      +pagination(objectPagination)
 
     form(
       action=""

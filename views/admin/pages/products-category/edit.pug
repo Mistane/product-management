@@ -3,90 +3,93 @@ include ../.././mixins/alertMessage.pug
 include ../.././mixins/selectTree.pug
 
 block main
-  +alert-error(5000) 
-  
-  h1(class="mb-4") Chinh sua danh muc
-  form(
-    method="post"
-    action=`${prefixAdmin}/products-category/edit/${product.id}?_method=PATCH`
-    enctype="multipart/form-data"
-  )
-    div(class="form-group")
-      label(for="title") Tieu de
-      input(
-        class="form-control"
-        id="title"
-        type="text"
-        name="title"
-        value=product.title
-      )
-    div(class="form-group")
-      label(for="parent_id") Danh muc cha
-      select(
-        class="form-control"
-        id="parent_id"
-        type="text"
-        name="parent_id"
-      )
-        option(value="" disabled selected) --Chon danh muc cha--
-        +select-tree(records, 1, product.parent_id)
-    div(class="form-group")
-      label(for="desc") Mo ta
-      textarea(
-        class="form-control"
-        id="desc"
-        rows="5"
-        name="description"
-        value=product.description
-      )
-    div(class="form-group")
-      label(for="img") Anh
-      input(
-        class="form-control"
-        id="img"
-        type="file"
-        name="thumbnail"
-        preview-image-input
-      )
-      div(class="mt-4")
-        img(
-          src=product.thumbnail
-          preview-image
-          style="width: 200px; height: auto"
+  if(permissions.includes("product-category_edit"))
+    +alert-error(5000) 
+    
+    h1(class="mb-4") Chinh sua danh muc
+    form(
+      method="post"
+      action=`${prefixAdmin}/products-category/edit/${product.id}?_method=PATCH`
+      enctype="multipart/form-data"
+    )
+      div(class="form-group")
+        label(for="title") Tieu de
+        input(
+          class="form-control"
+          id="title"
+          type="text"
+          name="title"
+          value=product.title
         )
-    div(class="form-group")
-      label(for="position") Vi tri
-      input(
-        class="form-control"
-        id="position"
-        type="number"
-        name="position"
-        min="1"
-        value=product.position
-        placeholder="Tu dong tang"
-      )
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusActive"
-        name="status"
-        value="active"
-        checked=product.status == "active" ? true : false
-      )
-      label(for="statusActive" class="form-check-label") Hoat dong
-    div(class="form-group form-check form-check-inline")
-      input(
-        type="radio"
-        class="form-check-input"
-        id="statusInActive"
-        name="status"
-        value="inactive"
-        checked=product.status == "inactive" ? true : false
-      )
-      label(for="statusInActive" class="form-check-label") Dung hoat dong
-    div(class="form-group")
-      button(
-        type="submit"
-        class="btn btn-success"
-      ) Cap nhat
+      div(class="form-group")
+        label(for="parent_id") Danh muc cha
+        select(
+          class="form-control"
+          id="parent_id"
+          type="text"
+          name="parent_id"
+        )
+          option(value="" disabled selected) --Chon danh muc cha--
+          +select-tree(records, 1, product.parent_id)
+      div(class="form-group")
+        label(for="desc") Mo ta
+        textarea(
+          class="form-control"
+          id="desc"
+          rows="5"
+          name="description"
+          value=product.description
+        )
+      div(class="form-group")
+        label(for="img") Anh
+        input(
+          class="form-control"
+          id="img"
+          type="file"
+          name="thumbnail"
+          preview-image-input
+        )
+        div(class="mt-4")
+          img(
+            src=product.thumbnail
+            preview-image
+            style="width: 200px; height: auto"
+          )
+      div(class="form-group")
+        label(for="position") Vi tri
+        input(
+          class="form-control"
+          id="position"
+          type="number"
+          name="position"
+          min="1"
+          value=product.position
+          placeholder="Tu dong tang"
+        )
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked=product.status == "active" ? true : false
+        )
+        label(for="statusActive" class="form-check-label") Hoat dong
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusInActive"
+          name="status"
+          value="inactive"
+          checked=product.status == "inactive" ? true : false
+        )
+        label(for="statusInActive" class="form-check-label") Dung hoat dong
+      div(class="form-group")
+        button(
+          type="submit"
+          class="btn btn-success"
+        ) Cap nhat
+  else
+    h1 Ban khong co quyen truy cap
