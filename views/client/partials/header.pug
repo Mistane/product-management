@@ -1,3 +1,5 @@
+include .././mixins/sub-menu
+
 header.header
   .container.header-bar
     .left
@@ -7,5 +9,7 @@ header.header
       ul.nav-list
         li.nav-item
           a(href="/") Trang chủ
-        li.nav-item
+        li(class="nav-item sub-menu")
           a(href="/products") Trang sản phẩm
+            -let pathProduct = "/products"
+            +sub-menu(layoutProductCategory, pathProduct)

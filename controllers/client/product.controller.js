@@ -1,4 +1,5 @@
 const Product = require("../.././models/project.model");
+const ProductCategory = require("../.././models/project.model-category");
 
 class productController {
   //[GET] /products

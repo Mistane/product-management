@@ -34,7 +34,10 @@ const productSchema = new mongoose.Schema(
         type: Date,
       },
     },
-
+    featured: {
+      type: String,
+      default: "0",
+    },
     slug: { type: String, slug: "title", unique: true },
     deleted: { type: Boolean, default: false },
     deletedAt: Date,

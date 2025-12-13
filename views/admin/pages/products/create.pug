@@ -38,6 +38,25 @@ block main
           rows="5"
           name="description"
         )
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="featured"
+          name="featured"
+          value="1"
+        )
+        label(for="featured" class="form-check-label") Noi bat
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="featured1"
+          name="featured"
+          value="0"
+          checked
+        )
+        label(for="featured1" class="form-check-label") Khong noi bat
       div(class="form-group")
         label(for="price") Gia
         input(

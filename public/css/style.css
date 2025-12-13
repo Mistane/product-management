@@ -27,8 +27,8 @@ ul {
 }
 .header-bar {
   display: flex;
-  justify-content: space-between;
   align-item: center;
+    gap: 900px;
   position: relative;
   padding-top: 20px;
 }
@@ -79,4 +79,19 @@ ul {
   text-color: pink;
   font-size: 50px;
   margin-left: 50px;
+}
+//----------------------------------------------
+
+//-----------------sub menu--------------------
+.nav-list{
+    position: relative;
+}
+
+.sub-menu{
+    position: absolute;
+}
+
+.sub-menu ul{
+    position: absolute:
+    left: 0;
 }
