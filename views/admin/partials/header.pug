@@ -6,4 +6,6 @@ header.header
     .right
       ul.nav-list
         li.nav-item
-          a(href=`${prefixAdmin}/auth/logout`) Dang xuat
+          a(href=`${prefixAdmin}/my-account` class="btn btn-primary") #{user.fullName}
+        li.nav-item
+          a(href=`${prefixAdmin}/auth/logout` class="btn btn-danger") Dang xuat

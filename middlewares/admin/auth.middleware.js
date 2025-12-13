@@ -19,6 +19,7 @@ const requireAuth = async (req, res, next) => {
         deleted: false,
         _id: user.role_id,
       }).select("title permissions");
+      res.locals.role = role.title;
       res.locals.permissions = role.permissions;
       next();
     }

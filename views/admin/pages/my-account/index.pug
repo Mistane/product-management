@@ -1,0 +1,19 @@
+extends ../.././layouts/default
+block main
+  .container.mt-5
+    h1 Thong tin ca nhan
+    if(user.fullName)
+      p Ho ten : #{user.fullName}
+    
+    if(user.email)
+      p email : #{user.email}
+
+    if(user.phone)
+      p So dien thoai : #{user.phone}
+
+    if(user.status)
+      p Trang thai : #{user.status}
+
+    if(user.role)
+      p Phan quyen : #{user.role}
+    script(src="/admin/js/script.js")
