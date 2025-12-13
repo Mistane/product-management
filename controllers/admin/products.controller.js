@@ -1,5 +1,6 @@
 const Product = require("../.././models/project.model");
 const Record = require("../.././models/project.model-category");
+const Account = require("../.././models/account.model");
 const filterStatusHelper = require("../.././helpers/filterStatus");
 const searchHelper = require("../.././helpers/search");
 const paginationHelper = require("../.././helpers/pagination");
@@ -55,9 +56,23 @@ class productsController {
       .limit(objectPagination.limitItems)
       .skip(objectPagination.productsSkip);
 
-    //su dung moment
-    const now = moment(Date.now()).format("LLLL");
-    console.log(now);
+    for (const product of products) {
+      const user = await Account.findOne({ _id: product.createdBy.account_id });
+      if (user) {
+        product.accountCreatedName = user.fullName;
+      }
+    }
+    for (const product of products) {
+      if (product.updatedBy.length > 0) {
+        const latestModified = product.updatedBy[product.updatedBy.length - 1];
+        console.log(latestModified);
+        const user = await Account.findOne({ _id: latestModified.account_id });
+        if (user) {
+          product.accountLatestModifiedName = user.fullName;
+          product.latestModifiedTime = latestModified.updatedAt;
+        }
+      }
+    }
     res.render("./admin/pages/products/index", {
       pageTitle: "Trang san pham",
       products,
@@ -67,24 +82,39 @@ class productsController {
       moment,
     });
   }
+
   //[PATCH] /admin/products/change-status/:status/:id
   async changeStatus(req, res) {
     const { status, id } = req.params;
     req.flash("success", "Cap nhat trang thai thanh cong !");
-    await Product.updateOne({ _id: id }, { status: status });
+    await Product.updateOne(
+      { _id: id },
+      { status: status, $push: { updatedBy: updatedBy } },
+    );
     res.redirect(req.get("Referrer") || "/");
   }
 
   //[PATCH] /admin/products/change-multi
   async changeMulti(req, res) {
     let { type, ids } = req.body;
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: Date.now(),
+    };
+
     ids = ids.split(",");
     switch (type) {
       case "active":
-        await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+        await Product.updateMany(
+          { _id: { $in: ids } },
+          { status: "active", $push: { updatedBy: updatedBy } },
+        );
         break;
       case "inactive":
-        await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+        await Product.updateMany(
+          { _id: { $in: ids } },
+          { status: "inactive", $push: { updatedBy: updatedBy } },
+        );
         break;
       case "delete-all":
         await Product.updateMany(
@@ -96,7 +126,10 @@ class productsController {
         //lay ra id va pos tu ids
         ids.forEach(async (item) => {
           const [id, pos] = item.split("-");
-          await Product.updateOne({ _id: id }, { position: pos });
+          await Product.updateOne(
+            { _id: id },
+            { position: pos, $push: { updatedBy: updatedBy } },
+          );
         });
         break;
       default:
@@ -175,7 +208,19 @@ class productsController {
     req.body.stock = parseInt(req.body.stock);
     req.body.price = parseInt(req.body.price);
     const id = req.params.id;
-    await Product.updateOne({ _id: id }, req.body);
+
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updatedAt: Date.now(),
+    };
+
+    await Product.updateOne(
+      { _id: id },
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      },
+    );
     res.redirect(`${systemConfig.prefixAdmin}/products`);
   }
 

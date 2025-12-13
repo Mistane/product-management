@@ -44,6 +44,7 @@ block main
               th Vi tri
               th Trang thai
               th Nguoi tao
+              th Nguoi Sua
               th Hanh dong
             tbody
               each product,index in products
@@ -94,10 +95,15 @@ block main
                           class="btn btn-sm btn-danger"
                         ) Dung hoat dong
                   td
-                    p Enanan
+                    p #{product.accountCreatedName}
                     if(product.createdBy.createdAt)
                       +date(product.createdBy.createdAt)
                       +time(product.createdBy.createdAt)
+                  td
+                    p #{product.accountLatestModifiedName}
+                    if(product.latestModifiedTime)
+                      +date(product.latestModifiedTime)
+                      +time(product.latestModifiedTime)
                   td
                     if(permissions.includes("product_edit"))
                       a(
