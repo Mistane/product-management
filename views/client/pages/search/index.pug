@@ -1,0 +1,9 @@
+extends ../../layouts/default
+include ../.././mixins/box-head
+include ../.././mixins/product-layout
+
+block main
+  .container
+    +box-head("Ket qua tim kiem")
+    +product-grid(products)
+

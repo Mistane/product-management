@@ -26,11 +26,12 @@ ul {
   align-item: center;
 }
 .header-bar {
-  display: flex;
   align-item: center;
-    gap: 900px;
   position: relative;
   padding-top: 20px;
+}
+.right{
+    display: flex;
 }
 
 //---------------------------------------------
@@ -58,9 +59,6 @@ ul {
   margin: 20px 20px 50px;
 border-radius: 20px;
     padding-bottom: 15px;
-}
-.product-item:hover{
-    opacity: 0.7;
 }
 
 .product-oldPrice {
