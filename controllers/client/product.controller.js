@@ -20,9 +20,11 @@ class productController {
       const find = {
         deleted: false,
         status: "active",
-        slug: req.params.slug,
+        slug: req.params.productSlug,
       };
       const product = await Product.findOne(find);
+      productHelper.newProductPrice(product);
+      console.log(product);
       res.render("client/pages/products/detail", {
         pageTitle: product.slug,
         product: product,
@@ -53,6 +55,7 @@ class productController {
 
     res.render("client/pages/products/category", {
       pageTitle: "Trang sản phẩm",
+      boxhead: productCategory.title,
       products,
     });
   }

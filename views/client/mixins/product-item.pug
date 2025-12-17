@@ -1,3 +1,5 @@
+include ./box-head
+
 mixin product-item-default(product)
   div(class="product-item col-3 row")
     .col-12.product-img
@@ -10,3 +12,38 @@ mixin product-item-default(product)
       p.product-price #{product.newPrice}$
       p.product-oldPrice #{product.price}$
       p.product-discount #{product.discountPercentage}%
+
+mixin product-item-sell-display(product)
+  div(class="product-item row")
+    .col-6.product-img
+      img(src=product.thumbnail style="width:100%; height: auto" alt=product.title class="product-img")
+      if(product.featured == "1")
+        p(class="product-featured") Noi bat
+    .col-6.product-detail
+      p.product-name #{product.title}
+      p.product-price #{product.newPrice}$
+      p.product-oldPrice #{product.price}$
+      p.product-discount Giam toi #{product.discountPercentage}%
+      p.product-stock Con lai #{product.stock} san pham
+      form(
+        action=`/cart/add/${product.id}`
+        method="POST"
+      )
+        div(
+          class="mt-5"
+        )
+          input(
+            type="number"
+            value="1"
+            min="1"
+            name="quantity"
+            max=product.stock
+            class="form-control"
+          )
+          button(
+            class="btn btn-success mt-3 form-control"
+            type="submit"
+          ) Them vao gio hang
+  +box-head("Mo ta san pham")
+  if(product.description)
+    p.product-desc #{product.description}
