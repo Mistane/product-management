@@ -52,11 +52,11 @@ class productController {
       status: "active",
       product_category_id: { $in: ids },
     });
-
+    const newProducts = productHelper.newProductsPrice(products);
     res.render("client/pages/products/category", {
       pageTitle: "Trang sản phẩm",
       boxhead: productCategory.title,
-      products,
+      products: newProducts,
     });
   }
 }
