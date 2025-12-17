@@ -194,8 +194,13 @@ class productsController {
       if (id) {
         find._id = id;
       }
+      const records = await Record.find({});
+      const newRecords = createTreeHelper(records);
       const product = await Product.findOne({ _id: id });
-      res.render("./admin/pages/products/edit", { product: product });
+      res.render("./admin/pages/products/edit", {
+        product: product,
+        records: newRecords,
+      });
     } catch {
       res.redirect(req.get("Referrer") || "/");
     }

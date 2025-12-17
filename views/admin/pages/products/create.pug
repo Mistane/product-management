@@ -21,14 +21,14 @@ block main
           name="title"
         )
       div(class="form-group")
-        label(for="parent_id") Danh muc cha
+        label(for="product_category_id") Danh muc san pham
         select(
           class="form-control"
-          id="parent_id"
+          id="product_category_id"
           type="text"
-          name="parent_id"
+          name="product_category_id"
         )
-          option(value="" disabled selected) --Chon danh muc cha--
+          option(value="" disabled selected) --Chon danh muc san pham--
           +select-tree(records)
       div(class="form-group")
         label(for="desc") Mo ta

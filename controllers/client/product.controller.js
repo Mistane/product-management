@@ -1,6 +1,7 @@
 const Product = require("../.././models/project.model");
 const ProductCategory = require("../.././models/project.model-category");
 const productHelper = require("../.././helpers/productPrice");
+const getSubCategoryIds = require("../.././helpers/getSubCategoryIds");
 
 class productController {
   //[GET] /products
@@ -29,6 +30,31 @@ class productController {
     } catch {
       res.redirect("/products");
     }
+  }
+
+  //[GET] /products/:product-category-slug
+  async category(req, res) {
+    //Moi doan code duoi day la trong truong hop khong co thang nao pha
+    const slug = req.params.productCategorySlug;
+    const productCategory = await ProductCategory.findOne({
+      deleted: false,
+      slug,
+    });
+    const categoryId = productCategory.id;
+
+    //Lay ra tat ca san pham thuoc danh muc con cua danh muc hien tai
+    const ids = await getSubCategoryIds.get(categoryId);
+    console.log(ids);
+    const products = await Product.find({
+      deleted: false,
+      status: "active",
+      product_category_id: { $in: ids },
+    });
+
+    res.render("client/pages/products/category", {
+      pageTitle: "Trang sản phẩm",
+      products,
+    });
   }
 }
 

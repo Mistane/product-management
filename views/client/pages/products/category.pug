@@ -1,0 +1,8 @@
+extends ../../layouts/default
+include ../.././mixins/product-layout
+
+block main
+  .container
+    +box-head("Danh sach san pham")
+    +product-grid(products)
+     
