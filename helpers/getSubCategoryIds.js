@@ -10,7 +10,6 @@ module.exports.get = async (parentId) => {
       parent_id: parentId,
     });
     if (children.length == 0) {
-      console.log(`parent id ${parentId} Khong co danh muc con`);
       return [parentId];
     } else {
       for (const child of children) {
