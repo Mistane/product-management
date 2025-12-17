@@ -1,0 +1,6 @@
+include ./product-item
+
+mixin product-grid(products)
+  .product-list.row
+    each product in products
+      +product-item-default(product)

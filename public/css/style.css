@@ -55,18 +55,65 @@ ul {
 }
 .product-item {
   display: inline-block;
-  width: 180px;
   background-color: #f2f2f2;
   margin: 20px 20px 50px;
+border-radius: 20px;
+    padding-bottom: 15px;
+}
+.product-item:hover{
+    opacity: 0.7;
 }
 
 .product-oldPrice {
   text-decoration: line-through;
+    font-weight: bold;
+    color: red;
+    margin-left: 15px;
 }
 
+.product-price{
+    font-weight: bold;
+    color: green;
+    margin-left: 15px;
+}
+
+.product-discount{
+    background-color: green;
+    color: white;
+    width: 20%;
+    text-align: center;
+    border-radius: 20px;
+}
 .product-name {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 30px;
+    color: black;
+}
+
+.product-img{
+    margin-top: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+    position: relative;
+}
+
+.product-featured{
+    background-color: green;
+    color: white;
+    width: 100px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.product-detail{
+    margin-top: 15px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 0 30px;
+    border-radius: 15px;
 }
 
 //------------------------------------------------

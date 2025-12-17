@@ -1,3 +1,12 @@
 extends ../../layouts/default
+include ../.././mixins/box-head
+include ../.././mixins/product-layout
 
 block main
+  .container
+    +box-head("San pham noi bat")
+    +product-grid(productsFeatured)
+
+  .container
+    +box-head("San pham moi nhat")
+    +product-grid(latestReleasedProducts)
