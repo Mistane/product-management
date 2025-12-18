@@ -1,0 +1,65 @@
+extends ../../layouts/default
+include ../.././mixins/box-head
+include ../.././mixins/product-layout
+
+block main
+  .container
+    +box-head("Thanh toan")
+    table(class="table" style="width:80%")
+      thead
+        tr
+          th STT
+          th Anh
+          th Ten
+          th Gia
+          th So luong
+          th Tong tien
+        tbody
+          each item, index in cartDetail.products
+            if(item.isSelected)
+              tr
+                td #{index + 1}
+                td
+                  img(src=item.thumbnail alt=item.title style="width:100px")
+                td #{item.title}
+                td #{item.price}
+                td #{item.quantity}
+                td #{item.totalPrice}
+    div(class="d-flex justify-content-end flex-row")
+      h3(class="text-end") Tong don hang : #{cartDetail.totalPrice}$
+    form(
+      action="/checkout/order"
+      method="POST"
+      class="form-control"
+    )
+      div(class="form-group")
+        label(for="fullName") Ho va ten
+        input(
+          type="text"
+          id="fullName"
+          name="fullName"
+          class="form-control"
+        )
+      div(class="form-group")
+        label(for="phone") So dien thoai
+        input(
+          type="text"
+          id="phone"
+          name="phone"
+          class="form-control"
+        )
+      div(class="form-group")
+        label(for="address") Dia chi
+        input(
+          type="text"
+          id="address"
+          name="address"
+          class="form-control"
+        )
+      div(class="form-group")
+        button(
+          class="btn btn-success form-control mt-3"
+          type="submit"
+        ) Dat hang
+  script(src="/js/cart.js")
+
