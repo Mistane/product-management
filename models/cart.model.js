@@ -7,6 +7,7 @@ const cartSchema = new mongoose.Schema(
       {
         product_id: String,
         quantity: Number,
+        isSelected: Boolean,
       },
     ],
   },

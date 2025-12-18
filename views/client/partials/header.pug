@@ -5,7 +5,7 @@ header.header
     .left.col-7
       a(href="/")
         img(src="/img/enaAvatar.png" height="100px" width="100px" class="header-img")
-      p Gio hang (#{cartCount ? cartCount : 0})
+      a(href="/cart") Gio hang (#{cartCount ? cartCount : 0})
     .right.col-5
       form(
         action="/search"

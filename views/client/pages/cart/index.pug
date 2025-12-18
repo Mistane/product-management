@@ -1,0 +1,48 @@
+extends ../../layouts/default
+include ../.././mixins/box-head
+include ../.././mixins/product-layout
+
+block main
+  .container
+    +box-head("Gio hang")
+    form(
+      action=`/cart/update`
+      method="post"
+      id="form-select"
+    )
+      input(type="text" name="ids" value="" class="d-none")
+      button(type="submit" class="btn btn-success" id="btn-submit") +
+    table(class="table" style="width:80%")
+      thead
+        tr
+          th
+            input(type="checkbox" name="checkall" id="checkAllItem")
+          th STT
+          th Anh
+          th Ten
+          th Gia
+          th So luong
+          th Tong tien
+          th Hanh dong
+        tbody
+          each item, index in cartDetail.products
+            tr
+              td
+                input(type="checkbox" data-id=item.product_id checked=item.isSelected)
+              td #{index + 1}
+              td
+                img(src=item.thumbnail alt=item.title style="width: 100px")
+              td
+                a(href=`/products/detail/${item.slug}`) #{item.title}
+              td #{item.price}$
+              td
+                input(type="number" name="quantity" data-id=item.product_id value=item.quantity style="width:50px")
+              td #{item.totalPrice}$
+              td
+                a(href=`/cart/delete/${item.product_id}` class="btn btn-danger") Xoa
+    div(class="d-flex justify-content-end flex-row")
+      h3(class="text-end") Tong don hang : #{cartDetail.totalPrice}$
+      div
+        a(href=`/checkout` class="btn btn-success d-block") Thanh toan
+  script(src="/js/cart.js")
+
