@@ -23,7 +23,15 @@ header.header
       ul.nav-list
         li.nav-item
           a(href="/") Trang chủ
-        li(class="nav-item sub-menu")
-          a(href="/products") Trang sản phẩm
+        if(!user)
+          li.nav-item
+            a(href="/user/register") Dang ki
+          li.nav-item
+            a(href="/user/login") Dang nhap
+        else
+          li.nav-item
+            a(href="/user/detail") Thong tin tai khoan
+        li(class="nav-item products-page")
+          a(href="/products" ) Trang sản phẩm
             -let pathProduct = "/products"
             +sub-menu(layoutProductCategory, pathProduct)
