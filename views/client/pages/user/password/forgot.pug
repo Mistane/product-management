@@ -1,15 +1,15 @@
-extends ../../layouts/default
-include ../../mixins/alertMessage
+extends ../../../layouts/default
+include ../../../mixins/alertMessage
 
 block main
   +alert-error(3000)
   div(class="container" style="width:500px")
-    h1(class="text-center") Dang nhap
+    h1(class="text-center") Lay lai mat khau
     div
       form(
         class="mt-5 d-block"
         method="post"
-        action="/user/login"
+        action="/user/password/forgot"
       )
         div(class="form-group")
           label(for="email") Email
@@ -19,17 +19,8 @@ block main
             name="email"
             class="form-control"
           )
-        div(class="form-group")
-          label(for="password") Mat khau
-          input(
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-          )
-          a(href="/user/password/forgot") Quen mat khau?
         div(class="form-group mt-3")
           button(
             type="submit"
             class="btn btn-success"
-          ) Dang nhap
+          ) Gui email xac nhan

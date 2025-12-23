@@ -1,35 +1,34 @@
-extends ../../layouts/default
-include ../../mixins/alertMessage
+extends ../../../layouts/default
+include ../../../mixins/alertMessage
 
 block main
   +alert-error(3000)
   div(class="container" style="width:500px")
-    h1(class="text-center") Dang nhap
+    h1(class="text-center") Doi mat khau
     div
       form(
         class="mt-5 d-block"
         method="post"
-        action="/user/login"
+        action="/user/password/reset"
       )
         div(class="form-group")
-          label(for="email") Email
-          input(
-            type="text"
-            id="email"
-            name="email"
-            class="form-control"
-          )
-        div(class="form-group")
-          label(for="password") Mat khau
+          label(for="password") Mat khau moi
           input(
             type="password"
             id="password"
             name="password"
             class="form-control"
           )
-          a(href="/user/password/forgot") Quen mat khau?
+        div(class="form-group")
+          label(for="otp") Xac nhan mat khau
+          input(
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="form-control"
+          )
         div(class="form-group mt-3")
           button(
             type="submit"
             class="btn btn-success"
-          ) Dang nhap
+          ) Doi mat khau
