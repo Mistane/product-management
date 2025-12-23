@@ -65,7 +65,32 @@ class checkoutControllers {
         $pull: { products: { product_id: { $in: orderSelected } } },
       },
     );
-    res.send(order);
+    res.redirect(`/checkout/success/${order.id}`);
+  }
+
+  //[GET] /checkout/success/:orderId
+  async success(req, res) {
+    console.log(req.params.orderId);
+    const order = await Order.findOne({ _id: req.params.orderId });
+    console.log(order);
+    const products = [];
+    for (const item of order.products) {
+      const product = await Product.findOne({ _id: item.product_id });
+      productHelper.newProductPrice(product);
+      products.push({
+        thumbnail: product.thumbnail,
+        title: product.title,
+        price: product.newPrice,
+        quantity: item.quantity,
+        totalPrice: product.newPrice * item.quantity,
+      });
+    }
+    order.productsInfo = products;
+    order.totalPrice = order.productsInfo.reduce(
+      (sum, val) => sum + val.totalPrice,
+      0,
+    );
+    res.render("client/pages/checkout/success", { order });
   }
 }
 

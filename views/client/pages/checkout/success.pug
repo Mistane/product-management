@@ -1,0 +1,44 @@
+extends ../../layouts/default
+include ../.././mixins/box-head
+include ../.././mixins/product-layout
+
+block main
+  .container
+    a(href="/" class="btn btn-primary") Ve lai trang chu
+    +box-head("Dat hang thanh cong")
+    h2 Thong tin ca nhan
+    table.table
+      tr
+        td Ho ten
+        td.bold #{order.userInfo.fullName}
+      tr
+        td So dien thoai
+        td.bold #{order.userInfo.phone}
+      tr
+        td Dia chi
+        td.bold #{order.userInfo.address}
+
+    h2 Thong tin don hang
+    table.table
+      thead
+        tr
+          th STT
+          th Anh
+          th Ten
+          th Gia
+          th So luong
+          th Tong tien
+      tbody
+        each item, index in order.productsInfo
+          tr
+            td #{index + 1}
+            td 
+              img(src=item.thumbnail style="width:100px")
+            td #{item.title}
+            td #{item.price}
+            td #{item.quantity}
+            td #{item.totalPrice}
+    div(class="d-flex justify-content-end flex-row")
+      h3(class="text-end") Tong don hang : #{order.totalPrice}$
+  script(src="/js/cart.js")
+
