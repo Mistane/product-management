@@ -1,0 +1,83 @@
+extends ../.././layouts/default
+include ../.././mixins/alertMessage.pug
+include ../.././mixins/selectTree.pug
+
+block main
+    +alert-error(5000) 
+    h1(class="mb-4") Cai dat chung
+    form(
+      method="post"
+      action=`${prefixAdmin}/settings/general?_method=PATCH`
+      enctype="multipart/form-data"
+    )
+      div(class="form-group")
+        label(for="websiteName") Ten website
+        input(
+          class="form-control"
+          id="websiteName"
+          type="text"
+          name="websiteName"
+          if(settings.websiteName)
+            value=settings.websiteName
+        )
+      div(class="form-group")
+        label(for="img") Anh
+        input(
+          class="form-control"
+          id="img"
+          type="file"
+          name="logo"
+          preview-image-input
+        )
+        div(class="mt-4")
+          img(
+            if(settings.logo)
+              src= settings.logo
+            preview-image
+            style="width: 200px; height: auto"
+          )
+      div(class="form-group")
+        label(for="phone") So dien thoai
+        input(
+          class="form-control"
+          type="text"
+          id="phone"
+          name="phone"
+          if(settings.phone)
+            value=settings.phone
+        )
+      div(class="form-group")
+        label(for="email") Email
+        input(
+          class="form-control"
+          type="text"
+          id="email"
+          name="email"
+          if(settings.email)
+            value=settings.email
+        )
+      div(class="form-group")
+        label(for="address") Dia chi
+        input(
+          class="form-control"
+          type="text"
+          id="address"
+          name="address"
+          if(settings.address)
+            value=settings.address
+        )
+      div(class="form-group")
+        label(for="copyright") Copyright
+        input(
+          class="form-control"
+          type="text"
+          id="copyright"
+          name="copyright"
+          if(settings.copyright)
+            value=settings.copyright
+        )
+      div(class="form-group")
+        button(
+          type="submit"
+          class="mt-4 btn btn-success"
+        ) Cap nhat

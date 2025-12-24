@@ -2,7 +2,7 @@ header.header
   .container.header-bar
     .left
       a(href=prefixAdmin)
-        img(src="/img/enaAvatar.png" height="100px" width="100px" class="header-img")
+        img(src=(settings.logo || "/img/enaAvatar.png") height="100px" width="100px" class="header-img")
     .right
       ul.nav-list
         li.nav-item

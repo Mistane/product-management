@@ -65,7 +65,6 @@ class productsController {
     for (const product of products) {
       if (product.updatedBy.length > 0) {
         const latestModified = product.updatedBy[product.updatedBy.length - 1];
-        console.log(latestModified);
         const user = await Account.findOne({ _id: latestModified.account_id });
         if (user) {
           product.accountLatestModifiedName = user.fullName;

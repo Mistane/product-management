@@ -63,7 +63,6 @@ class cartControllers {
   //[POST] /cart/update
   async update(req, res) {
     const ids = req.body.ids.split("-");
-    console.log(ids);
     const cartId = req.cookies.cartId;
     const cart = await Cart.findOne({ _id: cartId });
     if (ids[0] == "") {

@@ -10,7 +10,6 @@ class checkoutControllers {
     //[GET] /checkout
     const cartId = req.cookies.cartId;
     const cart = await Cart.findOne({ _id: cartId });
-    console.log(cart);
     for (const item of cart.products) {
       if (item.isSelected) {
         const productId = item.product_id;
@@ -72,7 +71,6 @@ class checkoutControllers {
   async success(req, res) {
     console.log(req.params.orderId);
     const order = await Order.findOne({ _id: req.params.orderId });
-    console.log(order);
     const products = [];
     for (const item of order.products) {
       const product = await Product.findOne({ _id: item.product_id });

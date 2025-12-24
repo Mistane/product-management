@@ -24,7 +24,6 @@ class productController {
       };
       const product = await Product.findOne(find);
       productHelper.newProductPrice(product);
-      console.log(product);
       res.render("client/pages/products/detail", {
         pageTitle: product.slug,
         product: product,
