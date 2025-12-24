@@ -40,6 +40,9 @@ app.locals.prefixAdmin = systemVar.prefixAdmin;
 //Routing
 Route(app);
 adminRoute(app);
+app.use((req, res) => {
+  res.status(404).render("client/pages/errors/404");
+});
 
 db.connect();
 

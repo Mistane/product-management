@@ -1,7 +1,30 @@
 extends ../../layouts/default
 
 block main
-  h1 hello
-  h2 Ban dang dang nhap duoi nguoi dung ten #{user.fullName}
+  .container.mt-5
+    h1 Thong tin ca nhan
+    if(user.fullName)
+      p Ho ten : #{user.fullName}
     
+    if(user.email)
+      p email : #{user.email}
+
+    if(user.phone)
+      p So dien thoai : #{user.phone}
+
+    if(user.status)
+      p Trang thai : #{user.status}
+
+    if(user.role)
+      p Phan quyen : #{user.role}
+  .card
+    .row
+      each item in statistic
+        .card.col-6
+          .card-header #{item.title}
+          .card-body
+            p So luong : <b>#{item.total}</b>
+            p Hoat dong: <b>#{item.active}</b>
+            p Dung hoat dong: <b>#{item.inactive}</b>
+
   
