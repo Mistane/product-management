@@ -1,4 +1,5 @@
 const User = require("../.././models/user.model");
+const Cart = require("../.././models/cart.model");
 const ForgotPassword = require("../.././models/forgotPassword.model.js");
 const md5 = require("md5");
 const generate = require("../.././helpers/generate.js");
@@ -48,6 +49,13 @@ class userControllers {
         req.flash("error", "Tai khoan hien dang bi khoa hoac khong hoat dong!");
         res.redirect(req.get("referrer" || "/"));
       } else {
+        const cartId = req.cookies.cartId;
+        const cart = await Cart.findOne({ user_id: user.id });
+        if (cart) {
+          res.cookie("cartId", cart.id);
+        } else {
+          await Cart.updateOne({ _id: cartId }, { user_id: user.id });
+        }
         res.cookie("tokenUser", user.tokenUser);
         res.redirect("/");
       }
@@ -57,6 +65,7 @@ class userControllers {
   //[GET] /user/logout
   async logout(req, res) {
     res.clearCookie("tokenUser");
+    res.clearCookie("cartId");
     res.redirect("/");
   }
 
@@ -133,6 +142,11 @@ class userControllers {
       res.clearCookie("tokenUserTmp");
       res.redirect("/");
     }
+  }
+
+  //[GET] /user/detail
+  async detail(req, res) {
+    res.render("./client/pages/user/detail", { user: res.locals.user });
   }
 }
 
