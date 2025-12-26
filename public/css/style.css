@@ -326,3 +326,20 @@ div[show-alert] {
 .inner-form button:hover {
   background: #1d4ed8;
 }
+
+//------------emoji-------------------
+emoji-picker {
+  --background: #222;
+}
+
+.chat .inner-form span {
+  display: inline-block;
+  position: relative;
+}
+.tooltip {
+  display: none;
+}
+
+.tooltip.shown {
+  display: block;
+}

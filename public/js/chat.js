@@ -1,3 +1,4 @@
+import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
 const formSendData = document.querySelector("#form-send-msg");
 if (formSendData) {
   formSendData.addEventListener("submit", (e) => {
@@ -44,3 +45,13 @@ const bodyChat = document.querySelector(".chat .inner-body");
 if (bodyChat) {
   bodyChat.scrollTop = bodyChat.scrollHeight;
 }
+//----------------------------------------------------------
+
+//--------------emoji----------------------------------
+const button = document.querySelector(".chat .inner-form span");
+const tooltip = document.querySelector(".tooltip");
+Popper.createPopper(button, tooltip);
+
+button.addEventListener("click", (e) => {
+  tooltip.classList.toggle("shown");
+});
