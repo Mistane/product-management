@@ -1,0 +1,30 @@
+extends ../../layouts/default
+include ../.././mixins/box-head
+include ../.././mixins/product-layout
+
+block main
+  +box-head("Chat")
+  .chat
+    .inner-body
+      if(chats)
+        each item in chats
+          -let flag = item.user_id == user.id;
+          div(class=(flag ? "inner-outgoing" : "inner-incoming"))
+            if(!flag) 
+              .inner-name #{item.fullName}
+            .inner-content
+              | #{item.content}
+    .inner-form
+      form(
+        data-userId = user.id
+        method="post"
+        id="form-send-msg"
+      )
+        input(
+          name="content"
+          value=""
+        )
+        button(
+          type="submit"
+        )
+          i.fa-solid.fa-paper-plane

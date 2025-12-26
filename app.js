@@ -4,12 +4,22 @@ const flash = require("express-flash");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
+const { createServer } = require("node:http");
+const { join } = require("node:path");
+const { Server: Server } = require("socket.io");
+
 const methodOverride = require("method-override");
 const app = express();
 const db = require("./config/database");
 
 app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method"));
+
+//socket.io
+const server = createServer(app);
+const io = new Server(server);
+
+global._io = io;
 
 //express-flash
 app.use(cookieParser("Shinonome Ena"));
@@ -46,6 +56,6 @@ app.use((req, res) => {
 
 db.connect();
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`server running at port ${port}`);
 });

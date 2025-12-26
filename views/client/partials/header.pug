@@ -30,9 +30,11 @@ header.header
             a(href="/user/login") Dang nhap
         else
           li.nav-item
-            a(href="/user/detail") Thong tin tai khoan
+            a(href="/user/detail") #{user.fullName}
           li.nav-item
             a(href="/user/logout") Dang xuat
+          li.nav-item
+            a(href="/chat") Chat
         li(class="nav-item products-page")
           a(href="/products" ) Trang sản phẩm
             -let pathProduct = "/products"
